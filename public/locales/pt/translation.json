@@ -1,0 +1,13 @@
+{
+    "logout": "Sair",
+    "error": "Ocorreu um erro",
+    "login": {
+        "title": "Entrar no Senior Care",
+        "username": "Nome de utilizador",
+        "password": "Palavra-passe",
+        "submit": "Submeter",
+        "error": {
+            "wrong-username-password": "Utilizador ou palavra-passe incorretos"
+        }
+    }
+}

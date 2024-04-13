@@ -1,0 +1,13 @@
+{
+    "logout": "Logout",
+    "error": "An error ocurred",
+    "login": {
+        "title": "Login to Senior Care",
+        "username": "Username",
+        "password": "Password",
+        "submit": "Submit",
+        "error": {
+            "wrong-username-password": "Wrong username or password"
+        }
+    }
+}
