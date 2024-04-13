@@ -1,16 +1,16 @@
 import { create } from 'zustand';
 import { get as getFromLocalStorage, set as setOnLocalStorage, remove } from 'local-storage';
 import { apiInstance, configureInterceptors } from '../api/requests/axios';
+import { jwtDecode } from "jwt-decode";
 
-type User = {
-  username: string;
-  name: string;
-  createdAt:string;
-}
+type TokenPayload = {
+  root: boolean;
+};
 
 type UserStore = {
-    user?: User;
     token?: string;
+    decodedToken?: TokenPayload;
+    isRoot: () => boolean;
     isLoggedIn: () => boolean;
     setToken: (token: string) => void;
     logout: () => void;
@@ -24,6 +24,7 @@ export const userStore = create<UserStore>((set, get) => {
 
   return {
     token: loadedToken,
+    decodedToken: undefined,
     isLoggedIn: () => !!get().token,
     setToken: (token: string): void => {
       set({ token });
@@ -33,6 +34,19 @@ export const userStore = create<UserStore>((set, get) => {
     logout: (): void => {
       set({token: undefined});
       remove(TOKEN_KEY);
+    },
+    isRoot: () => {
+      const currentToken = get().token;
+      if (!currentToken) {
+        return false;
+      }
+      const decodedToken = get().decodedToken;
+      if (decodedToken) {
+        return decodedToken.root;
+      }
+      const decoded = jwtDecode<TokenPayload>(currentToken);
+      set({decodedToken: decoded});
+      return decoded.root;
     }
   };
 });

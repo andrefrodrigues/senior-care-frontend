@@ -11,6 +11,11 @@ export const Root = (): JSX.Element => {
   useEffect(() => {
     if (!userStore.isLoggedIn()) {
       navigate({to: '/login'});
+      return;
+    }
+    if (userStore.isRoot()) {
+      navigate({to: '/admin'})
+      return;
     }
   }, [userStore, navigate]);
 
